@@ -10,11 +10,13 @@ namespace Attendance_Management_System.Models
     {
         public AttendanceManagementContext()
         {
+
         }
 
         public AttendanceManagementContext(DbContextOptions<AttendanceManagementContext> options)
             : base(options)
         {
+
         }
 
         public virtual DbSet<Attendance> Attendances { get; set; }

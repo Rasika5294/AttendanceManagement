@@ -1,7 +1,10 @@
+using Attendance_Management_System.Repository;
+using Attendance_Management_System.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +14,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Attendance_Management_System.Repository;
+using Attendance_Management_System.Services;
+using Attendance_Management_System.Models;
 
 namespace Attendance_Management_System
 {
@@ -26,8 +32,14 @@ namespace Attendance_Management_System
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddEntityFrameworkSqlServer();
             services.AddControllers();
+            services.AddDbContext<AttendanceManagementContext>(options =>
+            options.UseSqlServer(Configuration.GetSection("SqlConnection:ConnectionString").Value));
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmployeeServices, EmployeeServices>();
+            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Attendance_Management_System", Version = "v1" });
