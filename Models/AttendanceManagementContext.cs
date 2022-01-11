@@ -10,13 +10,11 @@ namespace Attendance_Management_System.Models
     {
         public AttendanceManagementContext()
         {
-
         }
 
         public AttendanceManagementContext(DbContextOptions<AttendanceManagementContext> options)
             : base(options)
         {
-
         }
 
         public virtual DbSet<Attendance> Attendances { get; set; }
@@ -41,15 +39,17 @@ namespace Attendance_Management_System.Models
 
             modelBuilder.Entity<Attendance>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.EmpId);
 
                 entity.ToTable("Attendance");
+
+                entity.Property(e => e.EmpId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("emp_id");
 
                 entity.Property(e => e.Dates)
                     .HasColumnType("date")
                     .HasColumnName("dates");
-
-                entity.Property(e => e.EmpId).HasColumnName("emp_id");
 
                 entity.Property(e => e.InTime)
                     .HasColumnType("datetime")
@@ -60,13 +60,14 @@ namespace Attendance_Management_System.Models
                     .HasColumnName("out_time");
 
                 entity.Property(e => e.TotalInTime)
-                    .HasColumnType("datetime")
+                    .HasColumnType("numeric(18, 0)")
                     .HasColumnName("total_in_time");
 
                 entity.HasOne(d => d.Emp)
-                    .WithMany()
-                    .HasForeignKey(d => d.EmpId)
-                    .HasConstraintName("FK__Attendanc__emp_i__75A278F5");
+                    .WithOne(p => p.Attendance)
+                    .HasForeignKey<Attendance>(d => d.EmpId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Attendanc__emp_i__282DF8C2");
             });
 
             modelBuilder.Entity<Employee>(entity =>

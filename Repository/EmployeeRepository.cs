@@ -1,5 +1,6 @@
 ﻿using Attendance_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,22 +16,33 @@ namespace Attendance_Management_System.Repository
         {
             this._context = context;
         }
-        //This function Returns List of all Employees
-        public IEnumerable<Employee> GetAllEmployees()
+        public async Task<IEnumerable<Employee>> GetAllEmployees()
         {
-            return _context.Employees.ToList();
+            return await _context.Employees.ToListAsync();
         }
 
-        //This function Returns  Employee By its Id
-        public Employee GetEmployeeById(int id)
+        public async Task<Employee> GetEmployeeById(int id)
         {
-            var result = _context.Employees.Where(employee => employee.EmpId == id).SingleOrDefault();
+            var result = await _context.Employees.Where(employee => employee.EmpId == id).SingleOrDefaultAsync();
 
             return result;
 
         }
+
+        public async Task <Employee> CheckIfEmployeeisValid(string email, string password)
+        {
+            return await _context.Employees.Where(manager => manager.EmpEmail == email && manager.EmpPassword == password).SingleOrDefaultAsync();
+        }
+
+       
+        //This function Returns  Employee By its Id
+       
+
+        public async Task<IEnumerable<PublicHoliday>> GetAllPublicHolydays()
+        {
+            return await this._context.PublicHolidays.ToListAsync();
+        }
+
         
-
-
     }
 }

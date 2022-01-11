@@ -12,14 +12,27 @@ namespace Attendance_Management_System.Services
         {
             this._iemployeeRepository = iemployeeRepository;
         }
-        public IEnumerable<Employee> GetAllEmployees()
+        public async Task<IEnumerable<Employee>> GetAllEmployees()
         {
-           return _iemployeeRepository.GetAllEmployees();   
+            return await _iemployeeRepository.GetAllEmployees();
+        }
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            return await _iemployeeRepository.GetEmployeeById(id);
         }
 
-        public Employee GetEmployeeById(int id)
+        public async Task<Employee> CheckIfEmployeeisValid(string email, string password)
         {
-            return _iemployeeRepository.GetEmployeeById(id);
+            return await _iemployeeRepository.CheckIfEmployeeisValid(email, password);
         }
+
+        public async Task<IEnumerable<PublicHoliday>> GetAllPublicHolydays()
+        {
+            return await _iemployeeRepository.GetAllPublicHolydays();
+        }
+
+       
+
+       
     }
 }

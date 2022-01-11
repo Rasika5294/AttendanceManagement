@@ -6,7 +6,10 @@ namespace Attendance_Management_System.Services
 {
     public interface IEmployeeServices
     {
-        IEnumerable<Employee> GetAllEmployees();
-        Employee GetEmployeeById(int id);
+        Task<IEnumerable<Employee>> GetAllEmployees();
+        Task<Employee> GetEmployeeById(int id);
+         
+        Task<IEnumerable<PublicHoliday>> GetAllPublicHolydays();
+        Task <Employee> CheckIfEmployeeisValid(string email, string password);
     }
 }

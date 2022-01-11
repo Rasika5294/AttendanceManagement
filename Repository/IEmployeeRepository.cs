@@ -8,8 +8,12 @@ namespace Attendance_Management_System.Repository
     public interface IEmployeeRepository
     {
 
-        IEnumerable<Employee> GetAllEmployees();
+       Task <IEnumerable<Employee>> GetAllEmployees();
         
-        Employee GetEmployeeById(int id);
+       Task <Employee> GetEmployeeById(int id);
+       Task <Employee> CheckIfEmployeeisValid(string email, string password);
+       Task<IEnumerable<PublicHoliday>> GetAllPublicHolydays();
+
+
     }
 }
