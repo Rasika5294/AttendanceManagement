@@ -8,5 +8,7 @@ namespace Attendance_Management_System.Repository
         Task <Manager> CheckIfManagerisValid(string email, string password);
         
         Task <Manager> GetManagerById(int id);
+       
+       // Task<Manager> DenyLeaveResponse();
     }
 }

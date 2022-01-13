@@ -16,6 +16,49 @@ namespace Attendance_Management_System.Repository
             this._context = context;
         }
 
+        public int AddLeaveRequest(Leave leave)
+        {
+            var leavrequest = _context.Employees.Where(employee => employee.EmpId == leave.EmpId).SingleOrDefault();
+            _context.Leaves.Add(leave); 
+            _context.SaveChanges();
+            return 1;
+            
+        }
+
+        public int ApproveLeaveRequest(Leave leave)
+        {
+            var employee = _context.Employees.Where(employee => employee.EmpId == leave.LeaveId).SingleOrDefault();
+
+            var leaveInDb = _context.Leaves.Where(leave => leave.LeaveId == leave.LeaveId).SingleOrDefault();
+            string leaveStatusPreviously = leaveInDb.Status;
+            if (leaveInDb != null)
+            {
+                leaveInDb.EmpId = leave.EmpId;
+                leaveInDb.FromDate = leave.FromDate;    
+                leaveInDb.TypeOfLeave = leave.TypeOfLeave;  
+                leaveInDb.ReasonForLeave = leave.ReasonForLeave;
+                leaveInDb.Status = leave.Status;
+                _context.SaveChanges();
+                while (leaveStatusPreviously != "Approved")
+                {
+                    if (leave.Status == "Approved")
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        if (leave.Status == "Denyed")
+                        {
+                            return 1;
+                        }
+                    }
+                }
+                return 1;
+              
+            }
+             return 0; 
+        }
+
         public async Task<IEnumerable<Leave>> GetEmployeeByLeaveApproved()
         {
            

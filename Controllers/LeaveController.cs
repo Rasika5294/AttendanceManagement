@@ -1,4 +1,5 @@
-﻿using Attendance_Management_System.Services;
+﻿using Attendance_Management_System.Models;
+using Attendance_Management_System.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -96,6 +97,19 @@ namespace Attendance_Management_System.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("AddLeaveRequest")]
+        public IActionResult AddLeaveRequest(Leave leave)
+        {
+            return new ObjectResult(_ileaveServices.AddLeaveRequest(leave));
+        }
 
+        [HttpPut]
+        [Route("ApproveLeaveRequest")]
+
+        public IActionResult ApproveLeaveRequest(Leave leave)
+        {
+            return new ObjectResult(_ileaveServices.ApproveLeaveRequest(leave));
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Attendance_Management_System.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=AttendanceManagement;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database= AttendanceManagement;Trusted_Connection=True;");
             }
         }
 
@@ -124,9 +124,9 @@ namespace Attendance_Management_System.Models
 
             modelBuilder.Entity<Leave>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("Leave");
+
+                entity.Property(e => e.LeaveId).HasColumnName("leave_id");
 
                 entity.Property(e => e.EmpId).HasColumnName("emp_id");
 
@@ -159,9 +159,9 @@ namespace Attendance_Management_System.Models
                     .HasColumnName("type_of_leave");
 
                 entity.HasOne(d => d.Emp)
-                    .WithMany()
+                    .WithMany(p => p.Leaves)
                     .HasForeignKey(d => d.EmpId)
-                    .HasConstraintName("FK__Leave__emp_id__73BA3083");
+                    .HasConstraintName("FK__Leave__emp_id__4F47C5E3");
             });
 
             modelBuilder.Entity<Manager>(entity =>

@@ -7,6 +7,7 @@ namespace Attendance_Management_System.Models
 {
     public partial class Leave
     {
+        public int LeaveId { get; set; }
         public int? EmpId { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime? ToDate { get; set; }

@@ -14,5 +14,7 @@ namespace Attendance_Management_System.Services
 
         Task<IEnumerable<Leave>> GetEmployeeByLeaveApproved();
         Task<IEnumerable<Leave>> GetEmployeeByPendingLeaveRequest();
+        int AddLeaveRequest(Leave leave);
+        int ApproveLeaveRequest(Leave leave);
     }
 }

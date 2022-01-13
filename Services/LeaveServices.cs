@@ -13,6 +13,16 @@ namespace Attendance_Management_System.Services
             this._leaveRepository = leaveRepository;
         }
 
+        public int AddLeaveRequest(Leave leave)
+        {
+            return _leaveRepository.AddLeaveRequest(leave);
+        }
+
+        public int ApproveLeaveRequest(Leave leave)
+        {
+            return _leaveRepository.ApproveLeaveRequest(leave);
+        }
+
         public async Task<IEnumerable<Leave>> GetEmployeeByLeaveApproved()
         {
             return await _leaveRepository.GetEmployeeByLeaveApproved();
